@@ -1,74 +1,104 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+interface HomeScreenProps {}
 
-export default function HomeScreen() {
+const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.mainContainer}>
+      <View style={styles.sidebar}>
+        <Text style={styles.sidebarTitle}>Monitoramento FATEC</Text>
+
+        {['Início', 'Monitoramento', 'Pessoas', 'Grupo de Pessoas', 'Visitantes',
+         'Grupo de Visitantes', 'Departamentos', 'Empresa', 'Dispositivos'].map((item) => (
+          <TouchableOpacity key={item} style={styles.menuButton}>
+            <Text style={styles.menuItem}>{item}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Sejam Bem Vindos</Text>          
+        </View>
+
+        <View style={styles.summaryContainer}>
+          <View style={[styles.card, styles.blueCard]}><Text style={styles.cardText}>28 / 31 Pessoas Identificadas</Text></View>
+          <View style={[styles.card, styles.blueCard]}><Text style={styles.cardText}>1 / 20 Visitantes Identificados</Text></View>
+        </View>
+      </ScrollView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  mainContainer: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  sidebar: {
+    width: 250,
+    backgroundColor: '#2c3e50',
+    padding: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  sidebarTitle: {
+    color: '#ecf0f1',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  menuItem: {
+    color: '#ecf0f1',
+    fontSize: 18,
+    paddingVertical: 10,
+  },
+  menuButton: {
+    marginVertical: 5,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  createButton: {
+    backgroundColor: '#e74c3c',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  createButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  summaryContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 8,
+  },
+  card: {
+    width: '45%',
+    margin: 8,
+    padding: 16,
+    borderRadius: 8,
+  },
+  cardText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  blueCard: {
+    backgroundColor: '#3498db',
   },
 });
+
+export default HomeScreen;
