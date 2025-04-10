@@ -1,17 +1,27 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../../types';
 
-interface HomeScreenProps {}
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp>();
+
+  const menuItems: (keyof RootStackParamList)[] = [
+    'Início',
+    'Monitoramento',
+    // pode adicionar mais depois, por enquanto só essas duas são válidas
+  ];
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.sidebar}>
         <Text style={styles.sidebarTitle}>Monitoramento FATEC</Text>
 
-        {['Início', 'Monitoramento', 'Pessoas', 'Grupo de Pessoas', 'Visitantes',
-         'Grupo de Visitantes', 'Departamentos', 'Empresa', 'Dispositivos'].map((item) => (
-          <TouchableOpacity key={item} style={styles.menuButton}>
+        {menuItems.map((item) => (
+          <TouchableOpacity key={item} style={styles.menuButton} onPress={() => navigation.navigate('Monitoramento')}>
             <Text style={styles.menuItem}>{item}</Text>
           </TouchableOpacity>
         ))}
@@ -19,7 +29,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Sejam Bem Vindos</Text>          
+          <Text style={styles.headerText}>Sejam Bem Vindos</Text>
         </View>
 
         <View style={styles.summaryContainer}>
